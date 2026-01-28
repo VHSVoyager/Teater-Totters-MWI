@@ -66,5 +66,27 @@ chart = (
     )
     .properties(height=320)
 )
+
+# Create and display a bar chart for average weekly experience
+bar_df = (df_filtered.groupby('Name')['Experience'].max()-df_filtered.groupby('Name')['Experience'].min()).to_frame().reset_index()
+bar_df['avg_exp'] = (bar_df['Experience'] / ((dates[1] - dates[0]).days / 7))
+bar_df = bar_df.sort_values('avg_exp', ascending=False)
+
+
+bar_chart = (
+    alt.Chart(bar_df)
+    .mark_bar()
+    .encode(
+        x=alt.X('Name:N', title='Member'),
+        y=alt.Y('avg_exp:Q', title='Average Experience'),
+        color='Name:N',
+    )
+    .properties(height=320)
+)
+
 if(members):
+    st.subheader("Total Experience Over Time")
     st.altair_chart(chart, use_container_width=True)
+
+    st.subheader("Average Weekly Experience")
+    st.altair_chart(bar_chart, use_container_width=True)
