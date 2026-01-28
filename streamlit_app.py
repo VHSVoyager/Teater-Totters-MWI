@@ -61,7 +61,7 @@ chart = (
     .mark_line()
     .encode(
         x=alt.X("Date:T", title="Date"),
-        y=alt.Y("gross:Q", title="Total Experience"),
+        y=alt.Y("gross:Q", title="Total Experience", scale=alt.Scale(domain=[df_chart['gross'].min()-50000,df_chart['gross'].max()+50000])),
         color="Name:N",
     )
     .properties(height=320)
