@@ -48,7 +48,7 @@ df_reshaped = df_reshaped.sort_values(by="Date", ascending=True)
 # Display the data as a table using `st.dataframe`.
 st.dataframe(
     df_reshaped,
-    use_container_width=True,
+    width='content',
     column_config={"Date": st.column_config.DatetimeColumn("Date", format='MMM D, YYYY', width='auto')},
 )
 
@@ -66,4 +66,5 @@ chart = (
     )
     .properties(height=320)
 )
-st.altair_chart(chart, use_container_width=True)
+if(members):
+    st.altair_chart(chart, use_container_width=True)
